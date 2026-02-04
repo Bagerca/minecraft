@@ -23,78 +23,81 @@
             color: white;
             height: 100vh; width: 100vw;
             overflow: hidden;
-            perspective: 1000px; /* Важно для 3D-эффекта */
+            perspective: 500px;
             cursor: url('https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.19.3/assets/minecraft/textures/gui/sprites/hud/crosshair.png') 8 8, auto;
         }
 
-        /* --- 3D ПАНОРАМА (КУБ) --- */
+        /* --- 3D ПАНОРАМА (мы ВНУТРИ куба) --- */
         .panorama-container {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             pointer-events: none;
-            perspective: 1000px;
-            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 500px;
         }
 
         .panorama-cube {
             width: 100%; height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            animation: rotateCube 120s linear infinite;
-            /* Центрируем куб и отодвигаем его на правильное расстояние */
-            transform: translateZ(-500px) rotateY(0deg);
+            animation: rotateSkybox 120s linear infinite;
+            /* Мы внутри куба, поэтому куб должен быть БОЛЬШИМ и окружающим нас */
+            transform: scale(2); /* Увеличиваем куб, чтобы мы были внутри */
         }
 
         .face {
             position: absolute;
-            /* Увеличиваем размер граней, чтобы точно покрыть весь обзор */
-            width: 2000px; height: 2000px;
-            /* Центрируем каждую грань */
+            /* Очень большие грани, чтобы точно охватывать весь обзор */
+            width: 3000px; height: 3000px;
             top: 50%; left: 50%;
-            margin-top: -1000px; margin-left: -1000px;
+            margin-top: -1500px; margin-left: -1500px;
             background-size: cover;
             background-repeat: no-repeat;
             image-rendering: pixelated;
-            opacity: 1;
-            /* Убираем видимость задней стороны */
-            backface-visibility: visible;
+            /* Убираем видимость задней стороны - мы видим только внутреннюю */
+            backface-visibility: hidden;
+            /* Для отладки: если хотите видеть грани куба, раскомментируйте */
+            /* border: 1px solid rgba(255,255,255,0.2); */
         }
 
-        /* Позиционирование граней куба (вид ИЗНУТРИ) */
+        /* КООРДИНАТЫ ГРАНЕЙ (вид ИЗНУТРИ куба) */
+        /* Каждая грань находится на расстоянии 1500px от центра (половина ширины грани) */
+        /* И повернута так, чтобы смотреть НА НАС изнутри */
+        
         .face-front { 
             background-image: url('panorama_0.png');
-            transform: translateZ(1000px);
+            transform: translateZ(1500px) rotateY(0deg);
         }
         .face-right { 
             background-image: url('panorama_1.png');
-            transform: rotateY(90deg) translateZ(1000px);
+            transform: rotateY(90deg) translateZ(1500px);
         }
         .face-back { 
             background-image: url('panorama_2.png');
-            transform: rotateY(180deg) translateZ(1000px);
+            transform: rotateY(180deg) translateZ(1500px);
         }
         .face-left { 
             background-image: url('panorama_3.png');
-            transform: rotateY(-90deg) translateZ(1000px);
+            transform: rotateY(-90deg) translateZ(1500px);
         }
         .face-top { 
             background-image: url('panorama_4.png');
-            transform: rotateX(90deg) translateZ(1000px);
+            transform: rotateX(90deg) translateZ(1500px);
         }
         .face-bottom { 
             background-image: url('panorama_5.png');
-            transform: rotateX(-90deg) translateZ(1000px);
+            transform: rotateX(-90deg) translateZ(1500px);
         }
 
-        @keyframes rotateCube {
-            0% { transform: translateZ(-500px) rotateY(0deg); }
-            100% { transform: translateZ(-500px) rotateY(360deg); }
+        @keyframes rotateSkybox {
+            0% { transform: scale(2) rotateY(0deg); }
+            100% { transform: scale(2) rotateY(360deg); }
         }
 
         /* Затемнение и блюр */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(3px);
             z-index: 0;
         }
@@ -304,7 +307,7 @@
 </head>
 <body>
 
-    <!-- ПАНОРАМА (3D Куб из 6 частей) -->
+    <!-- ПАНОРАМА (3D Куб, мы ВНУТРИ) -->
     <div class="panorama-container">
         <div class="panorama-cube">
             <div class="face face-front"></div>
@@ -476,36 +479,21 @@
             alert("🗺️ КАРТА НЕДОСТУПНА\n\nВедутся топографические работы...\nОжидайте в следующем обновлении!"); 
         }
 
-        // Проверяем наличие изображений панорамы
-        function checkPanoramaImages() {
-            const panoramaImages = [
-                'panorama_0.png',
-                'panorama_1.png', 
-                'panorama_2.png',
-                'panorama_3.png',
-                'panorama_4.png',
-                'panorama_5.png'
-            ];
+        // Альтернативный способ: если панорама все еще не работает, используем простую версию
+        function checkPanorama() {
+            console.log("Панорама загружена. Если видите куб снаружи, увеличьте масштаб.");
             
-            console.log("Проверка изображений панорамы:");
-            
-            panoramaImages.forEach((img, index) => {
-                const testImg = new Image();
-                testImg.src = img;
-                testImg.onload = function() {
-                    console.log(`✓ panorama_${index}.png загружен`);
-                };
-                testImg.onerror = function() {
-                    console.warn(`✗ panorama_${index}.png не найден`);
-                    // Заменяем отсутствующее изображение на запасное
-                    document.querySelectorAll('.face')[index].style.backgroundImage = 
-                        `url('https://i.imgur.com/7W2p0kj.png')`;
-                };
+            // Если все еще проблема, можно попробовать увеличить куб еще больше
+            const cube = document.querySelector('.panorama-cube');
+            const observer = new MutationObserver(function() {
+                // Отладочная информация
+                console.log("Размер куба:", cube.getBoundingClientRect());
             });
+            
+            observer.observe(cube, { attributes: true, attributeFilter: ['style'] });
         }
         
-        // Запуск после загрузки страницы
-        window.addEventListener('DOMContentLoaded', checkPanoramaImages);
+        window.addEventListener('DOMContentLoaded', checkPanorama);
     </script>
 </body>
 </html>
