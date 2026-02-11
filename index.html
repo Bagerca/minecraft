@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Children of Exodus</title>
+    <!-- Иконка сайта -->
     <link rel="icon" type="image/png" href="https://assets.mcasset.cloud/1.20.4/assets/minecraft/textures/block/grass_block_side.png">
+    <!-- Шрифт Minecraft -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Стили -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- КАСТОМНЫЙ КУРСОР (Должен быть первым) -->
+    <div id="custom-cursor"></div>
+
+    <!-- ФОН -->
     <canvas id="bgCanvas"></canvas>
     <div class="vignette"></div>
 
+    <!-- ТУЛТИП (Всплывающее окно) -->
     <div id="player-tooltip" class="mc-tooltip">
         <div class="tooltip-header">
             <img src="" id="tt-head" class="tt-image" alt="head">
@@ -24,8 +32,10 @@
         <div id="tt-lore" class="tt-lore">Description...</div>
     </div>
 
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <main class="ui-container">
         
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
         <section id="page-home" class="screen active">
             <div class="logo-wrapper">
                 <h1 class="mc-logo">CHILDREN</h1>
@@ -44,11 +54,13 @@
             </div>
         </section>
 
+        <!-- СТРАНИЦА КЛАНОВ -->
         <section id="page-clans" class="screen">
             <div class="clans-gui-window">
                 <div class="gui-header">СПИСОК ИГРОКОВ</div>
                 
                 <div class="clans-columns">
+                    <!-- Клан Щербет -->
                     <div class="clan-column">
                         <div class="clan-header pink-header">
                             <div class="clan-title-row">
@@ -63,8 +75,10 @@
                         <div class="clan-grid" id="list-sherbet"></div>
                     </div>
 
+                    <!-- Разделитель -->
                     <div class="clan-separator"></div>
                     
+                    <!-- Клан Тыкв -->
                     <div class="clan-column">
                         <div class="clan-header orange-header">
                             <div class="clan-title-row">
@@ -86,6 +100,7 @@
             </div>
         </section>
 
+        <!-- СТРАНИЦА ПРАВИЛ -->
         <section id="page-rules" class="screen">
             <div class="book-gui-custom">
                 <div class="book-content">
@@ -98,14 +113,12 @@
             </div>
         </section>
 
-        <!-- ФУТЕР ВЫНЕСЕН ИЗ UI-CONTAINER ДЛЯ НАДЕЖНОСТИ (но с position fixed он и так будет внизу) -->
         <footer class="main-footer">
             Site created by BAGERca © 2026
         </footer>
 
     </main>
 
-    <audio id="clickSound" src="https://www.myinstants.com/media/sounds/minecraft_click.mp3"></audio>
     <script src="script.js"></script>
 </body>
 </html>
