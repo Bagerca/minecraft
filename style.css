@@ -12,7 +12,7 @@ body {
     font-family: 'Press Start 2P', cursive;
     height: 100vh; overflow: hidden; color: white;
     image-rendering: pixelated; 
-    /* Скрываем системный курсор, так как у нас свой */
+    /* Скрываем системный курсор на ПК (так как есть кастомный) */
     cursor: none; 
 }
 
@@ -20,22 +20,18 @@ body {
 #custom-cursor {
     position: fixed;
     top: 0; left: 0;
-    width: 32px; height: 32px; /* Базовый размер */
+    width: 32px; height: 32px;
     background: url('https://assets.mcasset.cloud/1.20.4/assets/minecraft/textures/gui/sprites/hud/crosshair.png') no-repeat center;
     background-size: contain;
-    pointer-events: none; /* Пропускает клики сквозь себя */
+    pointer-events: none; /* Пропускает клики */
     z-index: 99999;
-    transform: translate(-50%, -50%) scale(1.5); /* Увеличиваем в 1.5 раза */
+    transform: translate(-50%, -50%) scale(1.5);
     transition: transform 0.1s;
     image-rendering: pixelated;
 }
-/* Анимация клика курсором */
 #custom-cursor.clicking {
     transform: translate(-50%, -50%) scale(1.2);
 }
-/* Обычный курсор возвращаем для кнопок, чтобы было понятно что можно нажать? 
-   Нет, в майнкрафте курсор не меняется. Оставляем crosshair везде. */
-
 
 /* ФОН */
 #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; image-rendering: pixelated; }
@@ -76,7 +72,7 @@ body {
     to { opacity: 0; transform: scale(1.1); filter: blur(4px); } 
 }
 
-/* --- ОБНОВЛЕННЫЙ ЛОГОТИП (ЧЕТКИЙ И ЯРКИЙ) --- */
+/* --- ЛОГОТИП (Четкий) --- */
 .logo-wrapper { 
     margin-bottom: 60px; 
     margin-top: -10vh;   
@@ -85,7 +81,6 @@ body {
     display: flex; flex-direction: column; align-items: center;
     animation: floatLogo 4s ease-in-out infinite;
 }
-
 @keyframes floatLogo {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -93,30 +88,17 @@ body {
 
 .mc-logo { 
     font-size: 84px; 
-    /* Яркий светло-серый цвет (Камень) */
-    color: #E6E6E6;
-    /* Жесткие тени для объема без мыла */
-    text-shadow: 
-        4px 4px 0 #555555,
-        4px 8px 0 #333333,
-        8px 12px 0 #111111,
-        0 15px 20px rgba(0,0,0,0.5);
+    color: #E6E6E6; /* Камень */
+    text-shadow: 4px 4px 0 #555, 4px 8px 0 #333, 8px 12px 0 #111, 0 15px 20px rgba(0,0,0,0.5);
     line-height: 1.1; margin-bottom: 5px; 
     letter-spacing: -4px;
     z-index: 2;
-    font-weight: normal; /* Press Start 2P и так жирный */
 }
 
 .mc-subtitle { 
     font-size: 32px; 
-    /* Яркий Золотой цвет */
-    color: #FFD700;
-    /* Оранжевая тень для объема */
-    text-shadow: 
-        3px 3px 0 #b86200,
-        3px 6px 0 #6e3500,
-        6px 9px 0 #221100,
-        0 10px 15px rgba(0,0,0,0.6);
+    color: #FFD700; /* Золото */
+    text-shadow: 3px 3px 0 #b86200, 3px 6px 0 #6e3500, 6px 9px 0 #221100, 0 10px 15px rgba(0,0,0,0.6);
     letter-spacing: 6px; 
     text-transform: uppercase;
     margin-top: -15px;
@@ -138,7 +120,7 @@ body {
     color: #EEE; text-shadow: 1px 1px 0 #222;
     background-color: #777; border: 2px solid #000;
     box-shadow: inset 2px 2px 0 #BBB, inset -2px -2px 0 #333;
-    cursor: none; /* Убираем системный курсор над кнопкой */
+    cursor: none; /* Убираем системный курсор */
     position: relative;
 }
 .mc-btn:hover:not(.disabled) { background-color: #888; color: #FFFFA0; box-shadow: inset 2px 2px 0 #CCC, inset -2px -2px 0 #444; }
@@ -165,19 +147,13 @@ body {
     text-shadow: 2px 2px 0 #333; margin-bottom: 10px;
 }
 
-/* --- КОЛОНКИ --- */
 .clans-columns { 
-    display: flex; 
-    flex: 1; 
-    overflow-y: auto; 
-    padding: 0 20px;
+    display: flex; flex: 1; overflow-y: auto; padding: 0 20px;
     background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.1)) no-repeat center;
     background-size: 2px 100%; 
 }
-
 .clan-column { flex: 1; display: flex; flex-direction: column; }
 .clan-separator { width: 30px; background: transparent; margin: 0; flex-shrink: 0; }
-
 .clan-header { border: 2px solid #000; text-align: left; box-shadow: 4px 4px 0 rgba(0,0,0,0.5); margin-bottom: 15px; }
 .pink-header { background: linear-gradient(135deg, #b04b8b, #7a3260); color: white; border-color: #FF99CC; }
 .orange-header { background: linear-gradient(135deg, #b06b00, #804d00); color: white; border-color: #FFAA00; }
@@ -188,63 +164,28 @@ body {
 
 /* --- СЛОТ ИГРОКА --- */
 .player-slot { 
-    display: flex; 
-    align-items: center; 
-    background: rgba(0,0,0,0.4); 
-    padding: 8px 12px; 
-    border: 1px solid transparent; 
-    cursor: none; /* Кастомный курсор */
-    transition: all 0.2s; 
-    gap: 10px; 
+    display: flex; align-items: center; background: rgba(0,0,0,0.4); 
+    padding: 8px 12px; border: 1px solid transparent; 
+    cursor: none; transition: all 0.2s; gap: 10px; 
 }
 .player-slot:hover { background: rgba(255,255,255,0.15); border: 1px solid #FFF; transform: scale(1.02); }
-
-.player-left { 
-    display: flex; 
-    align-items: center; 
-    flex: 1; min-width: 0; 
-}
-.player-head { 
-    width: 32px; height: 32px; 
-    margin-right: 12px; 
-    flex-shrink: 0; 
-    box-shadow: 2px 2px 0 rgba(0,0,0,0.5); 
-}
+.player-left { display: flex; align-items: center; flex: 1; min-width: 0; }
+.player-head { width: 32px; height: 32px; margin-right: 12px; flex-shrink: 0; box-shadow: 2px 2px 0 rgba(0,0,0,0.5); }
 .player-name { 
-    font-size: 11px; color: #DDD; 
-    text-shadow: 1px 1px 0 #000; 
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    width: 100%;
+    font-size: 11px; color: #DDD; text-shadow: 1px 1px 0 #000; 
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;
 }
-
-.role-icon { 
-    width: 32px; height: 32px; 
-    flex-shrink: 0; 
-    image-rendering: pixelated; 
-    filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.6));
-    margin-left: auto; 
-}
+.role-icon { width: 32px; height: 32px; flex-shrink: 0; image-rendering: pixelated; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.6)); margin-left: auto; }
 
 .gui-footer { padding-top: 20px; display: flex; justify-content: center; }
 .wide-btn { width: 300px; }
 
 /* --- ТУЛТИП --- */
 .mc-tooltip {
-    position: fixed; 
-    background-color: rgba(16, 0, 16, 0.98); 
-    border: 3px solid #350359;
-    padding: 12px; 
-    z-index: 9999; 
-    pointer-events: none; 
-    display: none;
-    width: auto; 
-    min-width: 200px;
-    max-width: none; 
-    white-space: nowrap;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.8); 
-    border-radius: 4px;
+    position: fixed; background-color: rgba(16, 0, 16, 0.98); border: 3px solid #350359;
+    padding: 12px; z-index: 9999; pointer-events: none; display: none;
+    width: auto; min-width: 200px; max-width: none; white-space: nowrap;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.8); border-radius: 4px;
 }
 .tooltip-header { display: flex; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #350359; }
 .tt-image { width: 48px; height: 48px; margin-right: 12px; border: 2px solid #000; }
@@ -253,80 +194,79 @@ body {
 .tt-role { color: #AAAAAA; font-size: 10px; font-style: italic; }
 .tt-lore { color: #b16dd1; font-size: 10px; line-height: 1.4; text-shadow: 1px 1px 0 #000; white-space: normal; max-width: 300px; }
 
-/* --- ФУТЕР --- */
-.main-footer { 
-    position: fixed; 
-    bottom: 10px; left: 0; width: 100%; 
-    text-align: center; font-size: 10px; 
-    color: #888; text-shadow: 1px 1px 0 #000; 
-    z-index: 1000; pointer-events: none; 
+/* --- МОБИЛЬНОЕ МОДАЛЬНОЕ ОКНО --- */
+.mobile-modal-overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); z-index: 20000; justify-content: center; align-items: center;
+    backdrop-filter: blur(5px);
 }
+.mobile-modal-content {
+    background: #101010; border: 2px solid #FFF; width: 85%; max-width: 320px;
+    padding: 20px; display: flex; flex-direction: column; align-items: center; text-align: center;
+    position: relative; box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); animation: zoomIn 0.3s ease;
+}
+.modal-close { position: absolute; top: 5px; right: 10px; font-size: 24px; color: #FF5555; cursor: pointer; }
+.mob-head-img { width: 64px; height: 64px; margin-bottom: 15px; border: 2px solid #555; box-shadow: 4px 4px 0 #000; }
+.mob-name { font-size: 18px; color: #FFFF55; margin-bottom: 5px; text-shadow: 2px 2px 0 #333; }
+.mob-role { font-size: 12px; color: #AAA; font-style: italic; margin-bottom: 15px; }
+.mob-separator { width: 100%; height: 2px; background: #333; margin-bottom: 15px; }
+.mob-lore { font-size: 12px; color: #DDD; line-height: 1.5; margin-bottom: 20px; min-height: 40px; }
+.modal-btn { padding: 12px !important; font-size: 12px !important; width: 100% !important; }
 
-/* КНИГА */
+/* --- КНИГА И ФУТЕР --- */
+.main-footer { position: fixed; bottom: 10px; left: 0; width: 100%; text-align: center; font-size: 10px; color: #888; text-shadow: 1px 1px 0 #000; z-index: 1000; pointer-events: none; }
 .book-gui-custom {
-    position: relative;
-    width: 420px; height: 620px; 
-    background-color: #F8F4D8;
-    border: 6px solid #583918;
-    box-shadow: 0 0 0 4px #2E1B0A, 10px 15px 30px rgba(0,0,0,0.8);
-    display: flex; flex-direction: column;
-    padding: 20px;
+    position: relative; width: 420px; height: 620px; background-color: #F8F4D8;
+    border: 6px solid #583918; box-shadow: 0 0 0 4px #2E1B0A, 10px 15px 30px rgba(0,0,0,0.8);
+    display: flex; flex-direction: column; padding: 20px;
 }
-.book-gui-custom::before {
-    content: ''; position: absolute; top: 10px; bottom: 10px; left: 15px; width: 0;
-    border-left: 4px dashed #B82E2E; opacity: 0.7; pointer-events: none;
-}
-.book-gui-custom::after {
-    content: ''; position: absolute; top: 10px; bottom: 10px; left: 22px; width: 0;
-    border-left: 2px solid rgba(0,0,0,0.1); pointer-events: none;
-}
-.book-content {
-    flex: 1; overflow-y: auto;
-    color: #111; font-size: 13px; line-height: 1.6;
-    font-family: 'Press Start 2P', cursive;
-    padding: 10px 10px 10px 30px;
-    scrollbar-width: thin; scrollbar-color: #B0A485 transparent;
-    cursor: none;
-}
+.book-gui-custom::before { content: ''; position: absolute; top: 10px; bottom: 10px; left: 15px; width: 0; border-left: 4px dashed #B82E2E; opacity: 0.7; pointer-events: none; }
+.book-gui-custom::after { content: ''; position: absolute; top: 10px; bottom: 10px; left: 22px; width: 0; border-left: 2px solid rgba(0,0,0,0.1); pointer-events: none; }
+.book-content { flex: 1; overflow-y: auto; color: #111; font-size: 13px; line-height: 1.6; font-family: 'Press Start 2P', cursive; padding: 10px 10px 10px 30px; scrollbar-width: thin; scrollbar-color: #B0A485 transparent; cursor: none; }
 .book-content::-webkit-scrollbar { width: 6px; }
 .book-content::-webkit-scrollbar-thumb { background-color: #B0A485; border-radius: 3px; }
-.book-title {
-    text-align: center; font-size: 15px; margin-bottom: 20px; color: #000;
-    border-bottom: 2px solid #333; padding-bottom: 8px; width: 100%;
-}
+.book-title { text-align: center; font-size: 15px; margin-bottom: 20px; color: #000; border-bottom: 2px solid #333; padding-bottom: 8px; width: 100%; }
 .book-text p { margin-bottom: 15px; }
 .rule-num { color: #AA0000; font-weight: bold; margin-right: 5px; }
 .book-footer { margin-top: 15px; display: flex; justify-content: center; padding-left: 20px; }
-.gui-btn {
-    width: 160px; height: 40px; background-color: #C6C6C6; border: 2px solid #000;
-    box-shadow: inset 2px 2px 0 #FFF, inset -2px -2px 0 #555;
-    color: #333; font-family: 'Press Start 2P'; font-size: 12px; cursor: none;
-}
+.gui-btn { width: 160px; height: 40px; background-color: #C6C6C6; border: 2px solid #000; box-shadow: inset 2px 2px 0 #FFF, inset -2px -2px 0 #555; color: #333; font-family: 'Press Start 2P'; font-size: 12px; cursor: none; }
 .gui-btn:hover { background-color: #DEDEDE; color: #FFFF55; }
 .gui-btn:active { background-color: #999; box-shadow: inset 2px 2px 0 #555, inset -2px -2px 0 #FFF; transform: translateY(1px); }
 
-/* АДАПТИВ */
+/* --- АДАПТИВ (ДЛЯ ТЕЛЕФОНОВ) --- */
 @media (max-width: 768px) {
-    /* На телефоне возвращаем обычный курсор, так как пальцем не водят */
-    body { cursor: auto; }
-    #custom-cursor { display: none; }
-    .mc-btn, .player-slot, .gui-btn, .book-content { cursor: pointer; }
-
-    .menu-buttons { width: 90%; }
-    .clans-columns { flex-direction: column; }
-    .logo-wrapper { margin-top: 0; margin-bottom: 40px; }
+    /* Возвращаем стандартный курсор для пальца */
+    body, .mc-btn, .player-slot, .gui-btn, .book-content, .btn-wrapper-disabled { cursor: auto !important; }
+    #custom-cursor { display: none !important; }
     
-    .mc-logo { 
-        font-size: 48px; letter-spacing: -2px; 
-        text-shadow: 2px 2px 0 #555, 2px 4px 0 #222;
-    }
-    .mc-subtitle { 
-        font-size: 18px; letter-spacing: 2px;
-        text-shadow: 2px 2px 0 #6e3500;
-    }
-    
+    /* Скрываем тултипы */
     .mc-tooltip { display: none !important; }
-    .book-gui-custom { width: 90vw; height: 70vh; }
-    .book-content { font-size: 10px; }
-    .role-icon { width: 24px; height: 24px; }
+
+    /* Логотип */
+    .logo-wrapper { margin-top: 20px; margin-bottom: 30px; animation: none; }
+    .mc-logo { font-size: 42px; letter-spacing: -2px; text-shadow: 2px 4px 0 #222; }
+    .mc-subtitle { font-size: 16px; letter-spacing: 2px; margin-top: -5px; text-shadow: 2px 3px 0 #6e3500; }
+    .splash-text { font-size: 10px; right: -20px; bottom: -20px; width: 200px; }
+
+    /* Кнопки */
+    .menu-buttons { width: 85%; gap: 15px; }
+    .mc-btn { padding: 15px; font-size: 14px; }
+
+    /* Окно кланов */
+    .clans-gui-window { width: 95%; height: 90vh; border-width: 2px; }
+    .clans-columns { flex-direction: column; background: none; }
+    .clan-separator { height: 20px; width: 100%; }
+    
+    /* Слот игрока */
+    .player-slot { padding: 12px; background: rgba(0,0,0,0.6); margin-bottom: 8px; }
+    .player-name { font-size: 14px; }
+    .role-icon { width: 28px; height: 28px; }
+
+    /* Книга */
+    .book-gui-custom { width: 90vw; height: 75vh; padding: 15px; box-shadow: 0 0 0 2px #2E1B0A, 5px 5px 15px rgba(0,0,0,0.8); }
+    .book-content { font-size: 11px; padding: 5px 5px 5px 15px; }
+    .book-title { font-size: 14px; margin-bottom: 15px; }
+    
+    /* Футер */
+    .main-footer { font-size: 8px; bottom: 5px; background: rgba(0,0,0,0.5); padding: 5px 0; }
 }
